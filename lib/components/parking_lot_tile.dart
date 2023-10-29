@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class ParkingLotTile extends StatefulWidget {
   final Function()? onTap;
   final color;
   final String image;
-  
-  const ParkingLotTile({super.key,
-  required this.onTap,
+
+  const ParkingLotTile(
+      {super.key,
+      required this.onTap,
       required this.color,
-      required this.image
-  });
+      required this.image});
 
   @override
   State<ParkingLotTile> createState() => _ParkingLotTileState();
@@ -25,7 +23,6 @@ class _ParkingLotTileState extends State<ParkingLotTile> {
       child: Container(
         height: 140,
         width: 160,
-        
         decoration: BoxDecoration(
           color: widget.color,
           borderRadius: BorderRadius.circular(14),
@@ -33,7 +30,6 @@ class _ParkingLotTileState extends State<ParkingLotTile> {
         child:
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           Image.asset(widget.image),
-          
         ]),
       ),
     );

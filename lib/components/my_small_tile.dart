@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class MySmallTile extends StatefulWidget {
   final Function()? onTap;
@@ -35,7 +33,6 @@ class _MySmallTileState extends State<MySmallTile> {
             children: [
             Image.asset(widget.image)
           ]),
-          
         ),
     );
   }

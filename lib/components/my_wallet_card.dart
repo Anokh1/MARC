@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class WalletCard extends StatefulWidget {
   final String text;
@@ -26,7 +24,8 @@ class _WalletCardState extends State<WalletCard> {
       height: 220,
       width: 330,
       decoration: BoxDecoration(
-        color: Color(0xFFD9D5D5),
+        // color: Color(0xFFD9D5D5),
+        color: Theme.of(context).colorScheme.primary,
         borderRadius: BorderRadius.circular(14),
       ),
       child:
@@ -56,7 +55,7 @@ class _WalletCardState extends State<WalletCard> {
                   child: Text(
                     widget.text,
                     style: TextStyle(
-                        color: Colors.black,
+                        // color: Colors.black,
                         fontSize: 30.0,
                         fontWeight: FontWeight.bold),
                   ),
@@ -77,7 +76,7 @@ class _WalletCardState extends State<WalletCard> {
           ],
         ),
         const SizedBox(
-          height: 35,
+          height: 34,
         ),
         Row(
           children: [

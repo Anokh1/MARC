@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-
+import 'package:marc/pages/number_plate_page.dart';
+import 'package:marc/pages/update_number_plate_page.dart';
 import '../components/my_big_button.dart';
 import '../components/my_huge_card.dart';
 
@@ -22,23 +21,58 @@ class _ProfilePageState extends State<ProfilePage> {
   // all users
   final usersCollection = FirebaseFirestore.instance.collection("Users");
 
+  void profileDialog(title, information, color) {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.tertiary,
+            title: Text(
+              title,
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Color(color)),
+            ),
+            content: Text(information),
+            actions: [
+              MaterialButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'O K',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
   // edit field
   Future<void> editField(String field) async {
     String newValue = "";
+    String editFieldName = "";
+
+    if (field == "username") {
+      editFieldName = "username";
+    } else if (field == "numberPlate") {
+      editFieldName = "number plate";
+    } else if (field == "pin") {
+      editFieldName = "PIN";
+    }
+
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: Colors.grey[900],
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
         title: Text(
-          "Edit $field",
-          style: const TextStyle(color: Colors.white),
+          "Edit " + editFieldName,
         ),
         content: TextField(
           autofocus: true,
-          style: TextStyle(color: Colors.white),
           decoration: InputDecoration(
-            hintText: "Enter new $field",
-            hintStyle: TextStyle(color: Colors.grey),
+            hintText: "Enter new " + editFieldName,
           ),
           // I missed this line and the data cannot be updated
           onChanged: (value) {
@@ -50,7 +84,6 @@ class _ProfilePageState extends State<ProfilePage> {
           TextButton(
             child: Text(
               "Cancel",
-              style: TextStyle(color: Colors.white),
             ),
             onPressed: () => Navigator.pop(context),
           ),
@@ -59,7 +92,6 @@ class _ProfilePageState extends State<ProfilePage> {
           TextButton(
             child: Text(
               "Save",
-              style: TextStyle(color: Colors.white),
             ),
             onPressed: () => Navigator.of(context).pop(newValue),
           )
@@ -68,19 +100,93 @@ class _ProfilePageState extends State<ProfilePage> {
     );
 
     // update in Firestore
+    // only update if the textfield is not empty
     if (newValue.trim().length > 0) {
-      // only update if the textfield is not empty
-      await usersCollection.doc(currentUser.email).update({field: newValue});
+      if (editFieldName == "PIN") {
+        List<String> newValueList = newValue.split("");
+        List<String> uploadPin = [];
+        List<String> pinList = [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "0",
+        ];
+        for (var p in newValueList) {
+          if (!pinList.contains(p) ||
+              newValue.trim().length != 6 ||
+              newValue.trim().length > 6) {
+            profileDialog("Invalid PIN",
+                "Please only enter 6 digits. Thank you", 0xFFFF0303);
+            break;
+          } else {
+            for (int i = 0; i < newValueList.length; i++) {
+              debugPrint("Q = " + newValueList[i]);
+              if (newValueList[i] == "1" ||
+                  newValueList[i] == "2" ||
+                  newValueList[i] == "3" ||
+                  newValueList[i] == "4" ||
+                  newValueList[i] == "5" ||
+                  newValueList[i] == "6" ||
+                  newValueList[i] == "7" ||
+                  newValueList[i] == "8" ||
+                  newValueList[i] == "9" ||
+                  newValueList[i] == "0") {
+                uploadPin.add(newValueList[i]);
+              } else {
+                break;
+              }
+            }
+
+            if (uploadPin.length == 6) {
+              await usersCollection
+                  .doc(currentUser.email)
+                  .update({field: newValue});
+              debugPrint(newValueList.toString());
+              profileDialog("Success", "Your PIN have been updated successfully! Thank you",
+                  0xFF17BC86);
+            }
+          }
+        }
+      } else if (editFieldName == "username") {
+        await usersCollection.doc(currentUser.email).update({field: newValue});
+      } else if (editFieldName == "number plate") {
+        String niceNumberPlate = newValue.toUpperCase();
+        if (niceNumberPlate.length <= 7) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  UpdateNumberPlatePage(newNumberPlate: niceNumberPlate),
+            ),
+          );
+        } else {
+          profileDialog(
+              "Invalid Number Plate",
+              "There seems to be an issue with the number plate provided. Thank you",
+              0xFFFF0303);
+        }
+      }
+    } else {
+      profileDialog("Error", "Please don't do this. Thank you", 0xFFFF0303);
     }
   }
 
-  // logout user
-  // this does not work, idk why
-  void logOut() {
-    FirebaseAuth.instance.signOut();
-  }
-
   void deleteAccount() {}
+
+  void numberPlatePage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const NumberPlatePage(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,64 +208,58 @@ class _ProfilePageState extends State<ProfilePage> {
           if (snapshot.hasData) {
             final userData = snapshot.data!.data() as Map<String, dynamic>;
 
-            return Center(
-              child: Column(
-                children: [
-                  Column(
-                    children: [
-                      // const SizedBox(
-                      //   height: 14,
-                      // ),
-                      HugeCard(
-                          color: Theme.of(context).colorScheme.background,
-                          image: 'lib/images/MARC_Icon_Small.png'),
-                      // const SizedBox(
-                      //   height: 14,
-                      // ),
+            return SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  children: [
+                    Column(
+                      children: [
+                        HugeCard(
+                            color: Theme.of(context).colorScheme.background,
+                            image: 'lib/images/MARC_Icon_Small.png'),
+                        MyBigButton(
+                            onTap: () => editField('username'),
+                            text: userData['username'],
+                            color: Theme.of(context).colorScheme.secondary),
+                        const SizedBox(
+                          height: 10,
+                        ),
 
-                      // direct method to load data from Firebase
-                      // Text(
-                      //   currentUser.email!,
-                      //   // textAlign: TextAlign.start,
-                      // ),
+                        // press button to edit the details
+                        MyBigButton(
+                            onTap: () {},
+                            text: currentUser.email!,
+                            color: Theme.of(context).colorScheme.secondary),
+                        const SizedBox(
+                          height: 10,
+                        ),
 
-                      // press button to edit the details
-                      MyBigButton(
-                          onTap: () => editField('username'),
-                          // text: "A D R I A N O O I 2 4 1 0",
-                          text: userData['username'],
-                          color: Theme.of(context).colorScheme.secondary),
-                      const SizedBox(
-                        height: 10,
-                      ),
-
-                      // press button to edit the details
-                      MyBigButton(
-                          onTap: () => editField('email'),
-                          text: currentUser.email!,
-                          color: Theme.of(context).colorScheme.secondary),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      // press button to edit the details
-                      MyBigButton(
-                          onTap: () => editField('numberPlate'),
-                          // text: "P M V 2 7 3 4",
-                          text: userData['numberPlate'],
-                          color: Theme.of(context).colorScheme.secondary),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 240.0),
-                    child: MyBigButton(
-                        onTap: logOut,
-                        text: "D E L E T E   A C C O U N T",
-                        color: Colors.grey[900]!),
-                  ),
-                ],
+                        // press button to edit the details
+                        MyBigButton(
+                            onTap: () => editField('numberPlate'),
+                            text: userData['numberPlate'],
+                            color: Theme.of(context).colorScheme.secondary),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        MyBigButton(
+                            onTap: () => editField('pin'),
+                            text: "PIN",
+                            color: Theme.of(context).colorScheme.secondary),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        MyBigButton(
+                            onTap: () => numberPlatePage(),
+                            text: "NUMBER PLATE",
+                            color: Theme.of(context).colorScheme.secondary),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             );
           } else if (snapshot.hasError) {

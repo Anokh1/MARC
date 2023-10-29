@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:marc/components/general_information_tile.dart';
 
 class GeneralInformation extends StatefulWidget {

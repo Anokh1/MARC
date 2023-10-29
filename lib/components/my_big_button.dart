@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class MyBigButton extends StatelessWidget {
   final Function()? onTap;
@@ -20,7 +18,6 @@ class MyBigButton extends StatelessWidget {
       child: Container(
         height: 45,
         width: 345,
-        // padding: const EdgeInsets.all(3.0),
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(8),

@@ -1,11 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:marc/components/history_payment_card.dart';
-import 'package:marc/components/history_reload_card.dart';
-import 'package:marc/pages/receipt_page.dart';
-
-import '../components/my_topup_button.dart';
+import 'package:marc/helper/helper_methods.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
@@ -15,17 +12,18 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
-  void showReceiptPage() {
-     Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const ReceiptPage(),
-      ),
-    );
+  final currentUser = FirebaseAuth.instance.currentUser!;
+
+  var userEmail;
+
+  void getReceiptCollection() {
+    userEmail = "Users/" + currentUser.email.toString() + "/receipt";
+    return userEmail;
   }
 
   @override
   Widget build(BuildContext context) {
+    getReceiptCollection();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
@@ -34,35 +32,74 @@ class _HistoryPageState extends State<HistoryPage> {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
         ),
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                // without the container, the top up button will move when the text changes because of the number of characters
                 Container(
-                  width: 200,
-                  child: Text(" History",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+                  width: 300,
+                  height: 35,
+                  child: Center(
+                    child: Text("Transaction History",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 24)),
+                  ),
                 ),
-                MyTopUpButton(),
               ],
             ),
             const SizedBox(
               height: 18,
             ),
 
-            Column(
-              children: [
-                HistoryPaymentCard(),
-                const SizedBox(
-                  height: 14,
-                ),
-                HistoryReloadCard(),
-              ],
-            ),
+            // following the displaying comments method from The Wall
+            StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection("Users")
+                  .doc(currentUser.email)
+                  .collection("receipt")
+                  .snapshots(),
+              builder: (context, snapshot) {
+                // show loading circle if there is no data
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                return Container(
+                  // I thibk this is fixed
+                  // with SingleChildScrollView
+                  height: 680.0, // best for iOS
+                  // height: 550.0,
+                  child: ListView(
+                    shrinkWrap: true,
+                    // physics: const NeverScrollableScrollPhysics(),
+                    children: snapshot.data!.docs.map((doc) {
+                      final receipt = doc.data() as Map<String, dynamic>;
+
+                      // return the receipt
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: HistoryPaymentCard(
+                          paymentName: receipt["paymentName"],
+                          paymentAmount: receipt["paymentAmount"],
+                          paymentStatus: receipt["paymentStatus"],
+                          // the date need to be formatted
+                          // date: receipt["date"],
+                          date: formatDate(receipt["date"]),
+                          numberPlate: receipt["numberPlate"],
+                          time: formatTime(receipt["date"]),
+                          paymentType: receipt["paymentType"],
+                          paymentId: receipt["paymentId"],
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                );
+              },
+            )
           ],
         ),
       ),

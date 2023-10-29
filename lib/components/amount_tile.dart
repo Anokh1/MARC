@@ -1,6 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class AmountTile extends StatefulWidget {
   final Function()? onTap;
@@ -20,6 +19,8 @@ class AmountTile extends StatefulWidget {
 }
 
 class _AmountTileState extends State<AmountTile> {
+  final currentUser = FirebaseAuth.instance.currentUser!;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -36,9 +37,9 @@ class _AmountTileState extends State<AmountTile> {
             height: 8,
           ),
           Image.asset(widget.image),
-          Text(widget.text,
+          Text("RM " + widget.text,
               style: const TextStyle(
-                  color: Colors.black,
+                  // color: Colors.black,
                   fontSize: 12,
                   fontWeight: FontWeight.bold))
         ]),

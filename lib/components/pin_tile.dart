@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class PinTile extends StatefulWidget {
   final Function()? onTap;
@@ -18,20 +16,23 @@ class _PinTileState extends State<PinTile> {
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
-          height: 76,
-          width: 76,
-          
-          decoration: BoxDecoration(
-            color: Color(0xFFD9D5D5),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-            Text(widget.text, style: TextStyle(color: Colors.white, fontSize: 24.0, fontWeight: FontWeight.bold),),
-          ]),
-          
+        height: 76,
+        width: 76,
+        decoration: BoxDecoration(
+          // color: Color(0xFFD9D5D5),
+          // color: Theme.of(context).colorScheme.background,
+          borderRadius: BorderRadius.circular(10),
         ),
+        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Text(
+            widget.text,
+            style: TextStyle(
+                // color: Colors.white,
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold),
+          ),
+        ]),
+      ),
     );
   }
 }

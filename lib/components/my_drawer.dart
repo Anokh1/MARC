@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:marc/components/drawer_tile.dart';
 
 class MyDrawer extends StatelessWidget {
   final void Function()? onHistoryTap;
   final void Function()? onLogoutTap;
   final void Function()? onProfileTap;
+  final void Function()? onInformationTap;
 
   const MyDrawer(
-      {super.key, required this.onHistoryTap, required this.onLogoutTap, required this.onProfileTap});
+      {super.key, required this.onHistoryTap, required this.onLogoutTap, required this.onProfileTap, required this.onInformationTap});
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      // backgroundColor: Color(0xFFD9D5D5),
       backgroundColor: Theme.of(context).colorScheme.secondary,
-      // backgroundColor: Color(0xFF222831),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -24,19 +21,6 @@ class MyDrawer extends StatelessWidget {
             children: [
               // header
               DrawerHeader(
-                // child: Icon(
-                //   // Icons.ac_unit_sharp, // need to change to the app icon
-                //   // Image.asset('lib/images/MARC_Icon.png'),
-                //   // color: Colors.white,
-                //   // size: 69,
-                // ),
-
-                // child: Text(''),
-                // decoration: BoxDecoration(
-                //   image: DecorationImage(
-                //       image: AssetImage('lib/images/MARC_Icon_Large.png')),
-                // ),
-
                 child: Container(
                     width: 100.0,
                     height: 100.0,
@@ -60,7 +44,7 @@ class MyDrawer extends StatelessWidget {
               // information
               DrawerTile(
                   icon: Icons.info,
-                  onTap: () {},
+                  onTap: onInformationTap,
                   text: "I N F O R M A T I O N"),
             ],
           ),

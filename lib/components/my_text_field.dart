@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class MyTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -29,7 +27,6 @@ class MyTextField extends StatelessWidget {
         fillColor: Theme.of(context).colorScheme.primary,
         filled: true,
         hintText: hintText,
-        // hintStyle: TextStyle(color: Colors.grey[500]),
       ),
     );
   }

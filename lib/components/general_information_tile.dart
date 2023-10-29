@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class GeneralInformationTile extends StatefulWidget {
   final String number;
@@ -31,7 +29,11 @@ class _GeneralInformationTileState extends State<GeneralInformationTile> {
                 color: Color(0xFFFF597B),
                 borderRadius: BorderRadius.circular(5.0),
               ),
-              child: Center(child: Text(widget.number, style: TextStyle(color: Colors.white),)),
+              child: Center(
+                  child: Text(
+                widget.number,
+                style: TextStyle(color: Colors.white),
+              )),
             ),
             const SizedBox(
               width: 6,

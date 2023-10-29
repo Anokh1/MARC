@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class MyTinyButton extends StatelessWidget {
   final Function()? onTap;
@@ -15,7 +13,6 @@ class MyTinyButton extends StatelessWidget {
       child: Container(
         height: 33,
         width: 33,
-        // padding: const EdgeInsets.all(3.0),
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(8),
