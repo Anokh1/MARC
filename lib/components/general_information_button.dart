@@ -55,6 +55,9 @@ class _GeneralInformationButtonState extends State<GeneralInformationButton> {
   // hence the creation of this separate component to be used for navigation
   void showGeneralInformation() {
     if (widget.parkingStatus == "Available") {
+      // to prevent from coming back to here
+      Navigator.pop(context);
+      
       Navigator.push(
         context,
         MaterialPageRoute(

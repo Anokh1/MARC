@@ -53,13 +53,17 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> editField(String field) async {
     String newValue = "";
     String editFieldName = "";
+    String editFieldDescription = "";
 
     if (field == "username") {
       editFieldName = "username";
+      editFieldDescription = "username";
     } else if (field == "numberPlate") {
-      editFieldName = "number plate";
+      editFieldName = "number plate \nExample: PMV2734";
+      editFieldDescription = "number plate";
     } else if (field == "pin") {
-      editFieldName = "PIN";
+      editFieldName = "6-digit PIN \nExample: 990303";
+      editFieldDescription = "6-digit PIN";
     }
 
     await showDialog(
@@ -72,7 +76,7 @@ class _ProfilePageState extends State<ProfilePage> {
         content: TextField(
           autofocus: true,
           decoration: InputDecoration(
-            hintText: "Enter new " + editFieldName,
+            hintText: "Enter a new " + editFieldDescription,
           ),
           // I missed this line and the data cannot be updated
           onChanged: (value) {
@@ -208,6 +212,12 @@ class _ProfilePageState extends State<ProfilePage> {
           if (snapshot.hasData) {
             final userData = snapshot.data!.data() as Map<String, dynamic>;
 
+            var numberPlateData = "SET NUMBER PLATE";
+
+            if (userData['numberPlate'] != "") {
+              numberPlateData = userData['numberPlate'];
+            }
+
             return SingleChildScrollView(
               child: Center(
                 child: Column(
@@ -237,7 +247,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         // press button to edit the details
                         MyBigButton(
                             onTap: () => editField('numberPlate'),
-                            text: userData['numberPlate'],
+                            // text: userData['numberPlate'],
+                            text: numberPlateData,
                             color: Theme.of(context).colorScheme.secondary),
                         const SizedBox(
                           height: 10,
@@ -251,7 +262,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         MyBigButton(
                             onTap: () => numberPlatePage(),
-                            text: "NUMBER PLATE",
+                            text: "MY NUMBER PLATE",
                             color: Theme.of(context).colorScheme.secondary),
                         const SizedBox(
                           height: 10,

@@ -23,7 +23,7 @@ class _ParkingCardTileState extends State<ParkingCardTile> {
         child: Column(
           children: [
             const SizedBox(
-              height: 14,
+              height: 9,
             ),
             Text(widget.parkingName.toUpperCase(),
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
@@ -31,14 +31,21 @@ class _ParkingCardTileState extends State<ParkingCardTile> {
               children: [
                 Image.asset("lib/images/music_wave.png"),
                 const SizedBox(
-                  height: 10,
+                  height: 3,
                 ),
                 Text(
-                  "This card is only valid today.",
-                  style: TextStyle(color: Colors.grey, fontSize: 10),
+                  "This card is only valid today",
+                  style: TextStyle(color: Colors.grey, fontSize: 8, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 3,
+                ),
+                Text(
+                  "View the Receipt in your Transaction History",
+                  style: TextStyle(color: Color(0xFFF4CE14), fontSize: 10),
+                ),
+                const SizedBox(
+                  height: 9,
                 ),
               ],
             )

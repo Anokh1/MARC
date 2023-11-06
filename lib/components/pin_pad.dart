@@ -46,6 +46,34 @@ class _PinPadState extends State<PinPad> {
   double fifthPinWidth = 2;
   double sixthPinWidth = 2;
 
+  void pinDialog(title, information, color) {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.tertiary,
+            title: Text(
+              title,
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Color(color)),
+            ),
+            content: Text(information),
+            actions: [
+              MaterialButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'O K',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
   void checkPin() {
     // need to confirm that the PIN matches
     // before deducting the user's credit
@@ -124,10 +152,16 @@ class _PinPadState extends State<PinPad> {
         'date': formatDate(Timestamp.now()),
       });
 
+      // to prevent from coming back to here
+      Navigator.pop(context); 
+
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => HomePage()),
       );
+
+      pinDialog("Success", "You have obtained a " + widget.parkingName + " parking card successfully! Thank you for using M A R C",
+        0xFF17BC86);
     }
   }
 
@@ -309,7 +343,7 @@ class _PinPadState extends State<PinPad> {
         const SizedBox(
           height: 16,
         ),
-        Text(userPin), // to show the current PIN entered
+        // Text(userPin), // to show the current PIN entered
         Text(
           "Enter PIN to purchase a " + widget.parkingName + " card",
           textAlign: TextAlign.center,

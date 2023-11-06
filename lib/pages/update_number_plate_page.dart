@@ -57,6 +57,9 @@ class _UpdateNumberPlatePageState extends State<UpdateNumberPlatePage> {
           .doc(currentUser.email)
           .update({'numberPlate': widget.newNumberPlate});
 
+      // to prevent from coming back to here
+      Navigator.pop(context);
+
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -66,6 +69,9 @@ class _UpdateNumberPlatePageState extends State<UpdateNumberPlatePage> {
     }
 
     void showHomePage() {
+      // to prevent from coming back to here
+      Navigator.pop(context);
+      
       Navigator.push(
         context,
         MaterialPageRoute(

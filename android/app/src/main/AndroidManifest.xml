@@ -2,7 +2,7 @@
     package="com.example.marc">
     
    <application
-        android:label="marc"
+        android:label="M A R C"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         

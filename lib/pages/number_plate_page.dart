@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:marc/components/number_plate_card.dart';
+import 'package:marc/pages/profile_page.dart';
 
 class NumberPlatePage extends StatefulWidget {
   const NumberPlatePage({super.key});
@@ -13,7 +14,14 @@ class NumberPlatePage extends StatefulWidget {
 class _NumberPlatePageState extends State<NumberPlatePage> {
   final currentUser = FirebaseAuth.instance.currentUser!;
 
-  // var numberPlateCounter = 0;
+  void showProfilePage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ProfilePage(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,22 +35,51 @@ class _NumberPlatePageState extends State<NumberPlatePage> {
       ),
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          Column(
             children: [
-              Container(
-                width: 300,
-                height: 35,
-                child: Center(
-                  child: Text("My Number Plate",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: 300,
+                    height: 35,
+                    child: Center(
+                      child: Text("My Number Plate",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 24)),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 250,
+                    height: 35,
+                    child: Center(
+                      child: Text(
+                          "To register number plate, go to ",
+                          style: TextStyle(fontSize: 16)),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: showProfilePage,
+                    child: Text(
+                      "Profile Screen",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                        fontSize: 16,
+                      ),
+                    ),
+                  )
+                ],
               ),
             ],
           ),
           const SizedBox(
-            height: 18,
+            height: 6,
           ),
           StreamBuilder<QuerySnapshot>(
             stream:

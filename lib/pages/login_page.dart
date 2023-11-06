@@ -40,7 +40,8 @@ class _LoginPageState extends State<LoginPage> {
       // pop loading circle
       Navigator.pop(context);
       // display error message
-      displayMessage(e.code);
+      // displayMessage(e.code);
+      loginDialog("Login Error", "Please try to login again!");
     }
   }
 
@@ -54,10 +55,38 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  void loginDialog(title, information) {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.tertiary,
+            title: Text(
+              title,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            content: Text(information),
+            actions: [
+              MaterialButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'O K',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      // backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: Color(0xFF222831),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -144,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         Text(
                           "R e g i s t e r   ",
-                          // style: TextStyle(color: Colors.grey[700]),
+                          style: TextStyle(color: Colors.white),
                         ),
                         GestureDetector(
                           onTap: widget.onTap,

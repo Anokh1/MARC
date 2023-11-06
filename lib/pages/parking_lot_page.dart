@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:marc/components/my_giant_card.dart';
 import 'package:marc/components/parking_lot_tile.dart';
@@ -50,7 +51,20 @@ class _ParkingLotPageState extends State<ParkingLotPage> {
         });
   }
 
+  String rainInformation = "";
+
+  // void getRainInformation() async {
+  //   DatabaseReference rainRef = FirebaseDatabase.instance.ref().child('gurneyParagonCamera/rain');
+  //   final snapshot = await rainRef.get();
+  //   if (snapshot.exists) {
+  //     rainInformation = snapshot.value.toString();
+  //   } else {
+  //     debugPrint("No rain status");
+  //   }
+  // }
+
   void checkParkingStatus(userParkingLotStatus, parkingLotName) {
+    // getRainInformation();
     if (userParkingLotStatus == true) {
       parkingLotDialog(
           "Card obtained",
@@ -62,6 +76,7 @@ class _ParkingLotPageState extends State<ParkingLotPage> {
         MaterialPageRoute(
           builder: (context) => ParkingLotInformationPage(
             currentParking: parkingLotName,
+            currentRain: rainInformation,
           ),
         ),
       );

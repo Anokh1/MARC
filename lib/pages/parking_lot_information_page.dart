@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:marc/components/general_information_button.dart';
 import 'package:marc/components/navigation_map.dart';
@@ -7,18 +8,35 @@ import '../components/my_big_button.dart';
 import '../components/my_carousel.dart';
 import '../components/my_large_tile.dart';
 
-class ParkingLotInformationPage extends StatelessWidget {
+class ParkingLotInformationPage extends StatefulWidget {
   const ParkingLotInformationPage({
     super.key,
     required this.currentParking,
+    required this.currentRain,
   });
 
   final String currentParking;
+  final String currentRain;
+
+  // void getRainInformation() async {
+  //   DatabaseReference rainRef = FirebaseDatabase.instance.ref().child('rain');
+  //   final snapshot = await rainRef.get();
+  //   if (snapshot.exists) {
+  //     String currentRain = snapshot.value.toString();
+  //   } else {
+  //     print("No rain status");
+  //   }
+  // } 
+
+  @override
+  State<ParkingLotInformationPage> createState() =>
+      _ParkingLotInformationPageState();
+}
+
+class _ParkingLotInformationPageState extends State<ParkingLotInformationPage> {
+  // String realTimeRain = "rainless";
 
   // this is the error faced when changed to StatelessWidget to connect to Firebase
-  // need to create another component for this
-  // already created on 27/08/23
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +50,7 @@ class ParkingLotInformationPage extends StatelessWidget {
         body: StreamBuilder<DocumentSnapshot>(
           stream: FirebaseFirestore.instance
               .collection("Parking")
-              .doc(currentParking)
+              .doc(widget.currentParking)
               .snapshots(),
           builder: (context, snapshot) {
             // get
@@ -48,12 +66,11 @@ class ParkingLotInformationPage extends StatelessWidget {
                 parkingStatusColor = 0xFFFF0303;
               }
 
-              // rain information
-              String rainImagePath = "";
+              String rainImagePath = "lib/images/sad.png";
               int rainStatusColor = 0;
-              String rainStatusText = ""; 
+              String rainStatusText = "";
 
-              if (parkingData['rain'] == "") {
+              if (parkingData['rain'] == "no information") {
                 rainImagePath = "lib/images/sad.png";
                 rainStatusColor = 0xFFF7F7F7;
                 rainStatusText = "No Information";
@@ -67,6 +84,19 @@ class ParkingLotInformationPage extends StatelessWidget {
                 rainStatusText = "No Rain";
               }
 
+              // if (widget.currentRain == "no information") {
+              //   rainImagePath = "lib/images/sad.png";
+              //   rainStatusColor = 0xFFF7F7F7;
+              //   rainStatusText = "No Information";
+              // } else if (widget.currentRain == "raining") {
+              //   rainImagePath = "lib/images/definitely_raining.png";
+              //   rainStatusColor = 0xFFBFDCE5;
+              //   rainStatusText = "Definitely Raining";
+              // } else if (widget.currentRain == "rainless") {
+              //   rainImagePath = "lib/images/clouds.png";
+              //   rainStatusColor = 0xFFFFF2F2;
+              //   rainStatusText = "No Rain";
+              // }
 
               return SingleChildScrollView(
                 child: Center(
@@ -84,7 +114,7 @@ class ParkingLotInformationPage extends StatelessWidget {
                         height: 14,
                       ),
                       MyCarousel(
-                        currentParking: currentParking,
+                        currentParking: widget.currentParking,
                       ),
                       MyBigButton(
                           onTap: () {},
@@ -105,7 +135,9 @@ class ParkingLotInformationPage extends StatelessWidget {
                             width: 15,
                           ),
                           ParkingLotTile(
-                              onTap: () {NavigationMap.adAppleTV();},
+                              onTap: () {
+                                NavigationMap.adAppleTV();
+                              },
                               color: Color(0xFFFFFFFF),
                               image: 'lib/images/apple_tv.png'),
                         ],
@@ -125,7 +157,7 @@ class ParkingLotInformationPage extends StatelessWidget {
                         parkingFee1: parkingData['price'],
                         parkingName: parkingData['name'],
                         parkingStatus: parkingData['status'],
-                        parkingNameCollection: currentParking,
+                        parkingNameCollection: widget.currentParking,
                       )
                     ],
                   ),

@@ -19,6 +19,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final passwordTextController = TextEditingController();
   final confirmPasswordTextController = TextEditingController();
   final userNameTextController = TextEditingController();
+  final pinTextController = TextEditingController();
 
   // register function
   void register() async {
@@ -30,12 +31,77 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
 
-    // check that password match
-    if (passwordTextController.text != confirmPasswordTextController.text) {
-      // pop loafing circle
+    // check that username field is not empty
+    if (userNameTextController.text == "") {
+      // pop loading circle
       Navigator.pop(context);
       // show error message
-      displayMessage("Password don't match");
+      // displayMessage("Password don't match");
+      registerDialog("Register Error", "Please enter your username");
+      return;
+    }
+
+    // check that password match
+    if (passwordTextController.text != confirmPasswordTextController.text) {
+      // pop loading circle
+      Navigator.pop(context);
+      // show error message
+      // displayMessage("Password don't match");
+      registerDialog("Register Error", "Password don't match!");
+      return;
+    }
+
+    // check if the PIN is valid
+    if (pinTextController.text.trim().length > 0) {
+      List<String> newPinList = pinTextController.text.split("");
+      List<String> newPin = [];
+      List<String> pinList = [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "0",
+      ];
+      for (var p in newPinList) {
+        if (!pinList.contains(p) ||
+            pinTextController.text.trim().length != 6 ||
+            pinTextController.text.trim().length > 6) {
+          // pop loading circle
+          Navigator.pop(context);
+          // show error message
+          // displayMessage("Password don't match");
+          registerDialog("Register Error", "Please enter a 6-digit PIN");
+          return;
+        } else {
+          for (int i = 0; i < newPinList.length; i++) {
+            if (newPinList[i] == "1" ||
+                newPinList[i] == "2" ||
+                newPinList[i] == "3" ||
+                newPinList[i] == "4" ||
+                newPinList[i] == "5" ||
+                newPinList[i] == "6" ||
+                newPinList[i] == "7" ||
+                newPinList[i] == "8" ||
+                newPinList[i] == "9" ||
+                newPinList[i] == "0") {
+              newPin.add(newPinList[i]);
+            } else {
+              break;
+            }
+          }
+        }
+      }
+    } else {
+      // pop loading circle
+      Navigator.pop(context);
+      // show error message
+      // displayMessage("Password don't match");
+      registerDialog("Register Error", "Please enter a 6-digit PIN.");
       return;
     }
 
@@ -54,7 +120,8 @@ class _RegisterPageState extends State<RegisterPage> {
           .set({
         'username': userNameTextController.text, // initial username
         'numberPlate': "", // motorcycle number plate
-        'pin': "", // user PIN
+        // 'pin': "", // user PIN
+        'pin': pinTextController.text, // user PIN
         'credit': "0.00", // initial e-wallet credit
         "gurneyParagon": false,
         "gurneyPlaza": false,
@@ -67,7 +134,9 @@ class _RegisterPageState extends State<RegisterPage> {
       // pop loading circle
       Navigator.pop(context);
       // show error message
-      displayMessage(e.code);
+      debugPrint(e.code); 
+      // displayMessage(e.code);
+      registerDialog("Register Error", "Please try again!");
     }
   }
 
@@ -81,10 +150,38 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+  void registerDialog(title, information) {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.tertiary,
+            title: Text(
+              title,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            content: Text(information),
+            actions: [
+              MaterialButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'O K',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      // backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: Color(0xFF222831),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -95,12 +192,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   children: [
                     // logo
                     Image.asset(
-                      'lib/images/MARC_Icon.png',
+                      'lib/images/MARC_Icon_Small.png',
                       height: 126,
                     ),
 
                     const SizedBox(
-                      height: 35,
+                      height: 5,
                     ),
 
                     // email textfield
@@ -117,6 +214,15 @@ class _RegisterPageState extends State<RegisterPage> {
                         controller: userNameTextController,
                         hintText: "U S E R N A M E",
                         obscureText: false),
+                    const SizedBox(
+                      height: 10,
+                    ),
+
+                    // PIN textfield
+                    MyTextField(
+                        controller: pinTextController,
+                        hintText: "P I N",
+                        obscureText: true),
                     const SizedBox(
                       height: 10,
                     ),
@@ -155,6 +261,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       children: [
                         Text(
                           "L o g i n   ",
+                          style: TextStyle(color: Colors.white),
                         ),
                         GestureDetector(
                           onTap: widget.onTap,

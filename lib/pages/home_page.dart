@@ -11,6 +11,8 @@ import 'package:marc/components/parking_card.dart';
 import 'package:marc/helper/helper_methods.dart';
 import 'package:marc/pages/history_page.dart';
 import 'package:marc/pages/information_page.dart';
+import 'package:marc/pages/login_page.dart';
+import 'package:marc/pages/number_plate_page.dart';
 import 'package:marc/pages/parking_lot_page.dart';
 import 'package:marc/pages/profile_page.dart';
 import 'package:marc/pages/weather_information_page.dart';
@@ -50,12 +52,27 @@ class _HomePageState extends State<HomePage> {
   }
 
   void showInformationPage() {
-    Navigator.pop(context);
+    // Navigator.pop(context);
 
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => const InformationPage(),
+      ),
+    );
+  }
+
+  void showShopeeHelmetPage() {
+    NavigationMap.shopeeHelmet();
+  }
+
+  void showMyNumberPlatePage() {
+    // Navigator.pop(context);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const NumberPlatePage(),
       ),
     );
   }
@@ -69,20 +86,51 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void homeDialog(title, information, color) {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.tertiary,
+            title: Text(
+              title,
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Color(color)),
+            ),
+            content: Text(information),
+            actions: [
+              MaterialButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'O K',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
   // logout user
   void logOut() {
     FirebaseAuth.instance.signOut();
     // sometimes the logout does not bring back the login screen
     // bugsss
     Navigator.pop(context);
+    homeDialog("Success", "You have been logged out successfully! Thank you",
+        0xFF17BC86);
 
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const LoginPage(onTap: null),
+      ),
+    );
 
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => const LoginPage(onTap: null),
-    //   ),
-    // );
+    Navigator.pop(context); 
     // bugsss
   }
 
@@ -100,7 +148,8 @@ class _HomePageState extends State<HomePage> {
           onHistoryTap: showHistoryPage,
           onLogoutTap: logOut,
           onProfileTap: showProfilePage,
-          onInformationTap: showInformationPage,
+          // onInformationTap: showInformationPage,
+          onHelmetTap: showShopeeHelmetPage,
         ),
         body: StreamBuilder<DocumentSnapshot>(
             stream: FirebaseFirestore.instance
@@ -192,7 +241,7 @@ class _HomePageState extends State<HomePage> {
                         // go to parking lot page
                         MyBigButton(
                             onTap: showParkingLot,
-                            text: "P U R C H A S E   A   C A R D",
+                            text: "P A R K I N G",
                             color: Color(0xFFCF0A0A)),
                         const SizedBox(
                           height: 18,
@@ -222,18 +271,16 @@ class _HomePageState extends State<HomePage> {
                                 Row(
                                   children: [
                                     MySmallTile(
-                                        onTap: () {
-                                          NavigationMap.shopeeHelmet();
-                                        },
+                                        onTap: showMyNumberPlatePage,
                                         color: Color(0xFFF2F2F2),
-                                        image: 'lib/images/red_helmet.png'),
+                                        image: 'lib/images/number_plate.png'),
                                     const SizedBox(
                                       width: 15,
                                     ),
                                     MySmallTile(
-                                        onTap: () {},
-                                        color: Color(0xFFFF597B),
-                                        image: 'lib/images/teleport.png'),
+                                        onTap: showInformationPage,
+                                        color: Color(0xFFF6F1F1),
+                                        image: 'lib/images/books.png'),
                                   ],
                                 ),
                               ],

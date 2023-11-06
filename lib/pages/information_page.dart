@@ -25,6 +25,7 @@ class _InformationPageState extends State<InformationPage> {
         child: Center(
           child: Column(
             children: [
+              // Remove Registered Number Plate Information
               Container(
                 height: 220,
                 width: 345,
@@ -35,7 +36,79 @@ class _InformationPageState extends State<InformationPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    // iPhone Information
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Image.asset('lib/images/iphoneMARC.png'),
+                        Container(
+                          width: 140,
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    "Number Plate",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                              Text(
+                                "Removing registered motorcycle number plate made easier.",
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return RemoveNumberPlatePage();
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      "Learn more",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              // iPhone Information
+              Container(
+                height: 220,
+                width: 345,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -120,193 +193,193 @@ class _InformationPageState extends State<InformationPage> {
                 height: 8,
               ),
               // ESP32 Information
-              Container(
-                height: 220,
-                width: 345,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Image.asset('lib/images/infoESP32.png'),
-                        Container(
-                          width: 140,
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    "Camera",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
-                                    // textAlign: TextAlign.start,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                              Text(
-                                "A functioning camera system powered by ESP32 microcontroller",
-                                style: TextStyle(fontSize: 12),
-                                // textAlign: TextAlign.justify,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
+              // Container(
+              //   height: 220,
+              //   width: 345,
+              //   decoration: BoxDecoration(
+              //     color: Theme.of(context).colorScheme.primary,
+              //     borderRadius: BorderRadius.circular(14),
+              //   ),
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //     children: [
+              //       Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //         children: [
+              //           Image.asset('lib/images/infoESP32.png'),
+              //           Container(
+              //             width: 140,
+              //             child: Column(
+              //               children: [
+              //                 Row(
+              //                   children: [
+              //                     Text(
+              //                       "Camera",
+              //                       style: TextStyle(
+              //                           fontWeight: FontWeight.bold,
+              //                           fontSize: 16),
+              //                       // textAlign: TextAlign.start,
+              //                     ),
+              //                   ],
+              //                 ),
+              //                 const SizedBox(
+              //                   height: 6,
+              //                 ),
+              //                 Text(
+              //                   "A functioning camera system powered by ESP32 microcontroller",
+              //                   style: TextStyle(fontSize: 12),
+              //                   // textAlign: TextAlign.justify,
+              //                 ),
+              //               ],
+              //             ),
+              //           ),
+              //         ],
+              //       )
+              //     ],
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 8,
+              // ),
               // Website Information
-              Container(
-                height: 220,
-                width: 345,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          width: 140,
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    "Website",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
-                                    // textAlign: TextAlign.start,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                              Text(
-                                "Visit our website to learn more about us!",
-                                style: TextStyle(fontSize: 12),
-                                // textAlign: TextAlign.justify,
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: Text(
-                                      "Learn more",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.blue,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Image.asset('lib/images/iphoneMARC.png'),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
+              // Container(
+              //   height: 220,
+              //   width: 345,
+              //   decoration: BoxDecoration(
+              //     color: Theme.of(context).colorScheme.primary,
+              //     borderRadius: BorderRadius.circular(14),
+              //   ),
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //     children: [
+              //       Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //         children: [
+              //           Container(
+              //             width: 140,
+              //             child: Column(
+              //               children: [
+              //                 Row(
+              //                   children: [
+              //                     Text(
+              //                       "Website",
+              //                       style: TextStyle(
+              //                           fontWeight: FontWeight.bold,
+              //                           fontSize: 16),
+              //                       // textAlign: TextAlign.start,
+              //                     ),
+              //                   ],
+              //                 ),
+              //                 const SizedBox(
+              //                   height: 6,
+              //                 ),
+              //                 Text(
+              //                   "Visit our website to learn more about us!",
+              //                   style: TextStyle(fontSize: 12),
+              //                   // textAlign: TextAlign.justify,
+              //                 ),
+              //                 const SizedBox(
+              //                   height: 10,
+              //                 ),
+              //                 Row(
+              //                   children: [
+              //                     GestureDetector(
+              //                       onTap: () {},
+              //                       child: Text(
+              //                         "Learn more",
+              //                         style: TextStyle(
+              //                           fontWeight: FontWeight.bold,
+              //                           color: Colors.blue,
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //               ],
+              //             ),
+              //           ),
+              //           Image.asset('lib/images/iphoneMARC.png'),
+              //         ],
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 8,
+              // ),
               // Remove Registered Number Plate Information
-              Container(
-                height: 220,
-                width: 345,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Image.asset('lib/images/iphoneMARC.png'),
-                        Container(
-                          width: 140,
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    "Number Plate",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                              Text(
-                                "Removing registered motorcycle number plate made easier.",
-                                style: TextStyle(fontSize: 12),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) {
-                                            return RemoveNumberPlatePage();
-                                          },
-                                        ),
-                                      );
-                                    },
-                                    child: Text(
-                                      "Learn more",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.blue,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
+              // Container(
+              //   height: 220,
+              //   width: 345,
+              //   decoration: BoxDecoration(
+              //     color: Theme.of(context).colorScheme.primary,
+              //     borderRadius: BorderRadius.circular(14),
+              //   ),
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //     children: [
+              //       Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //         children: [
+              //           Image.asset('lib/images/iphoneMARC.png'),
+              //           Container(
+              //             width: 140,
+              //             child: Column(
+              //               children: [
+              //                 Row(
+              //                   children: [
+              //                     Text(
+              //                       "Number Plate",
+              //                       style: TextStyle(
+              //                           fontWeight: FontWeight.bold,
+              //                           fontSize: 16),
+              //                     ),
+              //                   ],
+              //                 ),
+              //                 const SizedBox(
+              //                   height: 6,
+              //                 ),
+              //                 Text(
+              //                   "Removing registered motorcycle number plate made easier.",
+              //                   style: TextStyle(fontSize: 12),
+              //                 ),
+              //                 const SizedBox(
+              //                   height: 10,
+              //                 ),
+              //                 Row(
+              //                   children: [
+              //                     GestureDetector(
+              //                       onTap: () {
+              //                         Navigator.push(
+              //                           context,
+              //                           MaterialPageRoute(
+              //                             builder: (context) {
+              //                               return RemoveNumberPlatePage();
+              //                             },
+              //                           ),
+              //                         );
+              //                       },
+              //                       child: Text(
+              //                         "Learn more",
+              //                         style: TextStyle(
+              //                           fontWeight: FontWeight.bold,
+              //                           color: Colors.blue,
+              //                         ),
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //               ],
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 50,
+              // ),
             ],
           ),
         ),

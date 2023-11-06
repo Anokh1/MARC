@@ -109,11 +109,16 @@ class _WalletPageState extends State<WalletPage> {
                             .update({"paymentId": DocumentSnapshot.id}));
 
                     showHomePage(); 
+
+                    walletDialog(
+                        "E-wallet reload success",
+                        "RM " + amount + " have been reloaded. Thank you for using M A R C",
+                        0xFF17BC86);
                     
                   } else {
                     walletDialog(
                         "Maximum limit reached",
-                        "Unfortunately, there is a limit for the amount of credit. The e-wallet can only store credits worth not more than the value of RM 200.00. Thank you.",
+                        "Unfortunately, there is a limit for the amount of credit. The e-wallet can only store credits worth not more than the value of RM 200.00. Thank you",
                         0xFFFF0303);
                   }
                 }
@@ -142,6 +147,33 @@ class _WalletPageState extends State<WalletPage> {
                           image: "lib/images/music_wave.png",
                           logo: "lib/images/MARC_Icon_Wallet.png",
                           people: "lib/images/happy_couple.png",
+                        ),
+
+                        const SizedBox(
+                          height: 14,
+                        ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Please select a top-up amount to reload your",),
+                          ],
+                        ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              children: [
+                                Text("e-wallet, the maximum balance is ",),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text("RM 200.00", style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFFF0303)),)
+                              ],
+                            ),
+                          ],
                         ),
 
                         const SizedBox(

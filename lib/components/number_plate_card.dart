@@ -19,6 +19,8 @@ class NumberPlateCard extends StatefulWidget {
 
 class _NumberPlateCardState extends State<NumberPlateCard> {
   final currentUser = FirebaseAuth.instance.currentUser!;
+  // all users
+  final usersCollection = FirebaseFirestore.instance.collection("Users");
 
   void deleteNumberPlate() {
     showDialog(
@@ -54,6 +56,10 @@ class _NumberPlateCardState extends State<NumberPlateCard> {
                         .delete()
                         .catchError((error) =>
                             print("Delete number plate failed: $error"));
+
+                    await usersCollection
+                        .doc(currentUser.email)
+                        .update({'numberPlate': ""});
 
                     Navigator.pop(context);
                   },

@@ -13,6 +13,15 @@ class MyBigButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    double fSize = 0;
+
+    if (text.length > 16) {
+      fSize = 12; 
+    } else {
+      fSize = 18;
+    }
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -25,8 +34,8 @@ class MyBigButton extends StatelessWidget {
         child: Center(
             child: Text(
           text,
-          style: const TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: fSize),
         )),
       ),
     );

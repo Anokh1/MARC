@@ -5,10 +5,10 @@ class MyDrawer extends StatelessWidget {
   final void Function()? onHistoryTap;
   final void Function()? onLogoutTap;
   final void Function()? onProfileTap;
-  final void Function()? onInformationTap;
+  final void Function()? onHelmetTap;
 
   const MyDrawer(
-      {super.key, required this.onHistoryTap, required this.onLogoutTap, required this.onProfileTap, required this.onInformationTap});
+      {super.key, required this.onHistoryTap, required this.onLogoutTap, required this.onProfileTap, required this.onHelmetTap});
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +43,9 @@ class MyDrawer extends StatelessWidget {
 
               // information
               DrawerTile(
-                  icon: Icons.info,
-                  onTap: onInformationTap,
-                  text: "I N F O R M A T I O N"),
+                  icon: Icons.heat_pump,
+                  onTap: onHelmetTap,
+                  text: "H E L M E T   S H O P"),
             ],
           ),
 

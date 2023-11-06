@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:marc/components/general_information_tile.dart';
 import 'package:marc/components/my_big_button.dart';
 import 'package:marc/pages/home_page.dart';
+import 'package:marc/pages/remove_number_plate_page.dart';
 
 class NumberPlateTermsPage extends StatefulWidget {
   const NumberPlateTermsPage({super.key, required this.newNumberPlate});
@@ -33,6 +34,9 @@ class _NumberPlateTermsPageState extends State<NumberPlateTermsPage> {
         "ownerEmail": currentUser.email,
       });
 
+      // to prevent from coming back to here
+      Navigator.pop(context);
+
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -59,8 +63,14 @@ class _NumberPlateTermsPageState extends State<NumberPlateTermsPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(widget.newNumberPlate,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFFF86F03))),
-              Text(" belongs to you now.", style: TextStyle(fontSize: 20),)
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFF86F03))),
+              Text(
+                " belongs to you now.",
+                style: TextStyle(fontSize: 20),
+              )
             ],
           ),
           const SizedBox(
@@ -86,15 +96,24 @@ class _NumberPlateTermsPageState extends State<NumberPlateTermsPage> {
             children: [
               Text("Learn more: "),
               GestureDetector(
-                          onTap: () {},
-                          child: Text(
-                            "How to remove number plate?",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue,
-                            ),
-                          ),
-                        )
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return RemoveNumberPlatePage();
+                      },
+                    ),
+                  );
+                },
+                child: Text(
+                  "How to remove number plate?",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
+                ),
+              )
             ],
           ),
 

@@ -143,6 +143,9 @@ class _GeneralInformationPageState extends State<GeneralInformationPage> {
                 // var convertFee = double.parse(widget.parkingFee);
                 // if (credit >= widget.parkingFee) {
                 else if (convertCredit >= convertFee) {
+                  // to prevent from coming back to here
+                  Navigator.pop(context);
+
                   // only proceed have sufficient credit
                   Navigator.push(
                     context,
