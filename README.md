@@ -1,16 +1,8 @@
-# marc
+# MARC
 
-A new Flutter project.
+A Flutter project by Ooi Kean Hong for 303COM Individual Project.
 
-## Getting Started
+## Objectives
+1.	To provide an alternate payment method for motorcyclists to enter the shopping mall motorcycle parking lot by making payment for the parking fee through the shopping mall motorcycle parking lot mobile application. 
+2.	To allow motorcyclists to determine if there are empty spaces at the shopping mall motorcycle parking lot through the shopping mall motorcycle parking lot mobile application.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
