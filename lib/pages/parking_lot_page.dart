@@ -159,7 +159,6 @@ class _ParkingLotPageState extends State<ParkingLotPage> {
                       const SizedBox(
                         height: 15,
                       ),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -178,7 +177,6 @@ class _ParkingLotPageState extends State<ParkingLotPage> {
                               image: 'lib/images/queensbay_mall_logo.png'),
                         ],
                       ),
-
                       const SizedBox(
                         height: 80,
                       ),

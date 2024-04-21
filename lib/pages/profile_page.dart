@@ -60,10 +60,12 @@ class _ProfilePageState extends State<ProfilePage> {
       editFieldDescription = "username";
     } else if (field == "numberPlate") {
       editFieldName = "number plate \nExample: PMV2734";
+      // editFieldName = "number plate";
       editFieldDescription = "number plate";
     } else if (field == "pin") {
       editFieldName = "6-digit PIN \nExample: 990303";
-      editFieldDescription = "6-digit PIN";
+      // editFieldName = "PIN";
+      editFieldDescription = "PIN";
     }
 
     await showDialog(
@@ -76,7 +78,8 @@ class _ProfilePageState extends State<ProfilePage> {
         content: TextField(
           autofocus: true,
           decoration: InputDecoration(
-            hintText: "Enter a new " + editFieldDescription,
+            // hintText: "Enter a new " + editFieldDescription,
+            hintText: "Enter a new " + editFieldName,
           ),
           // I missed this line and the data cannot be updated
           onChanged: (value) {
@@ -106,7 +109,7 @@ class _ProfilePageState extends State<ProfilePage> {
     // update in Firestore
     // only update if the textfield is not empty
     if (newValue.trim().length > 0) {
-      if (editFieldName == "PIN") {
+      if (editFieldDescription == "PIN") {
         List<String> newValueList = newValue.split("");
         List<String> uploadPin = [];
         List<String> pinList = [
@@ -157,9 +160,9 @@ class _ProfilePageState extends State<ProfilePage> {
             }
           }
         }
-      } else if (editFieldName == "username") {
+      } else if (editFieldDescription == "username") {
         await usersCollection.doc(currentUser.email).update({field: newValue});
-      } else if (editFieldName == "number plate") {
+      } else if (editFieldDescription == "number plate") {
         String niceNumberPlate = newValue.toUpperCase();
         if (niceNumberPlate.length <= 7) {
           Navigator.push(
@@ -180,8 +183,6 @@ class _ProfilePageState extends State<ProfilePage> {
       profileDialog("Error", "Please don't do this. Thank you", 0xFFFF0303);
     }
   }
-
-  void deleteAccount() {}
 
   void numberPlatePage() {
     Navigator.push(

@@ -39,13 +39,13 @@ class _HistoryPaymentCardState extends State<HistoryPaymentCard> {
         builder: (context) => AlertDialog(
               backgroundColor: Theme.of(context).colorScheme.tertiary,
               title: const Text(
-                "Delete Transaction",
+                "Delete Receipt",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               content: const Text(
-                  "Deleted transactions cannot be recovered. Delete this transaction?"),
+                  "Deleted transaction receipt cannot be recovered. Delete this receipt?"),
               actions: [
                 MaterialButton(
                   onPressed: () {
